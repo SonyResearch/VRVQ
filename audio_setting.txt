@@ -1,0 +1,38 @@
+# auto::-web 밑에.
+
+
+audio::-webkit-media-controls-volume-slider {
+  display: none !important;
+  min-width: 0;
+}
+
+audio::-webkit-media-controls-timeline-container {
+  display: none !important;
+  min-width: 0;
+}
+
+audio::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+  min-width: 0;
+}
+
+audio::-webkit-media-controls-timeline {
+  display: none !important;
+  min-width: 0;
+}
+
+@keyframes audioWidth {
+  from {
+    width: 110px;
+  }
+  to {
+    width: 84px;
+  }
+}
+
+## auto:: 위에.
+
+    audio {
+  width: 210px;
+  animation: audioWidth 0.1s forwards;
+}

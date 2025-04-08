@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Variable Bitrate Residual Vector Quantization for Audio Coding</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icons8-codec-32.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+<!--    myhead-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+<style>
+  /* 기본 글꼴 및 정렬 */
+  body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9fb;
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  /* Sample 타이틀 간지 스타일 */
+  .sample-title {
+    font-size: 36px;
+    text-align: center;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    animation: fadeInUp 0.6s ease-in-out both;
+  }
+
+  /* Fade-in 애니메이션 */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 반응형 테이블 래퍼 */
+  .table-wrapper {
+    padding: 0 24px;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+
+  /* 테이블 스타일 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 10px;
+  }
+
+  th, td {
+    padding: 10px;
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  th {
+    background-color: #f2f6fc;
+    font-weight: 600;
+    color: #333;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f9fbfc;
+  }
+
+  /* 오디오 플레이어 */
+
+    .audio-box {
+        padding: 10px;
+        width: 100px;
+    }
+
+
+    .impmap img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+    }
+
+    .spectrogram img {
+        max-width: 150px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border-radius: 6px;
+        }
+
+
+
+</style>
+
+
+
+
+<!--    ### latex 수식-->
+     <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+
+    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+</head>
+<body>
+
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Variable Bitrate Residual Vector Quantization for Audio Coding</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">Yunkee Chae</a><sup>1,3</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Woosung Choi</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Yuhta Takida</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Junghyun Koo</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Yukara Ikemiya</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Zhi Zhong</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Kin Wai Cheuk</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Marco A. Martinez-Ramirez</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Kyogu Lee</a><sup>3,4,5</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Wei-Hsiang Liao</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Yuki Mitsufuji</a><sup>1,2</sup>,</span>
+
+              </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>Sony AI <sup>2</sup>Sony Group Corporation, Tokyo, Japan<br>
+                      <sup>3</sup>IPAI, <sup>4</sup>AIIS, <sup>5</sup>Department of Intelligence and Information, Seoul National University
+                        </span>
+                  </div>
+            
+            <!-- Publication Links -->
+<div class="column has-text-centered">
+    <div class="publication-links">
+  
+      <!-- Paper PDF link -->
+      <span class="link-block">
+        <a href="https://ieeexplore.ieee.org/document/10889508" target="_blank"
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+            <i class="fas fa-file-pdf"></i>
+          </span>
+          <span>ICASSP 2025 Paper</span>
+        </a>
+      </span>
+      <!-- arXiv abstract link -->
+      <span class="link-block">
+        <a href="https://arxiv.org/abs/2410.06016" target="_blank"
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+            <i class="ai ai-arxiv"></i>
+          </span>
+          <span>arXiv (NeurIPS 2024 Workshop)</span>
+        </a>
+      </span>
+      <!-- GitHub link -->
+      <span class="link-block">
+        <a href="https://github.com/SonyResearch/VRVQ" target="_blank"
+           class="external-link button is-normal is-rounded is-dark">
+          <span class="icon">
+            <i class="fab fa-github"></i>
+          </span>
+          <span>Code</span>
+        </a>
+      </span>
+  
+
+  
+    </div>
+  </div>
+  
+     
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser video-->
+<!--<section class="hero teaser">-->
+<!--  <div class="container is-max-desktop">-->
+<!--    <div class="hero-body">-->
+<!--      <video poster="" id="tree" autoplay controls muted loop height="100%">-->
+<!--        &lt;!&ndash; Your video here &ndash;&gt;-->
+<!--        <source src="static/videos/banner_video.mp4"-->
+<!--        type="video/mp4">-->
+<!--      </video>-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. -->
+<!--      </h2>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent state-of-the-art neural audio compression models have progressively adopted residual vector quantization (RVQ). Despite this success, these models employ a fixed number of codebooks per frame, which can be suboptimal in terms of rate-distortion tradeoff, particularly in scenarios with simple input audio, such as silence. To address this limitation, we propose variable bitrate RVQ (VRVQ) for audio codecs, which allows for more efficient coding by adapting the number of codebooks used per frame. Furthermore, we propose a gradient estimation method for the non-differentiable masking operation that transforms from the importance map to the binary importance mask, improving model training via a straight-through estimator. We demonstrate that the proposed training framework achieves superior results compared to the baseline method and shows further improvement when applied to the current state-of-the-art codec.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+
+<!--###################### Audio and Importance Map Samples ################################-->
+<!--###################### Audio and Importance Map Samples ################################-->
+<!--###################### Audio and Importance Map Samples ################################-->
+
+<!-- const indices = [10, 11, 12, 13];
+const nq_list = [2, 4, 6, 8];
+const level_list = [4.00, 6.40, 9.60, 16.00]; -->
+<!-- const indices = [10, 11];
+const nq_list = [2, 4];
+const level_list = [4.00, 6.40]; -->
+
+<!-- const indices = Array.from({ length: 30 }, (_, i) => i); -->
+<!-- scripts for daps -->
+<div id="results-container-speech"></div>
+<script>
+    // 0~29
+    const indices = [2, 3, 10, 14, 15, 21, 23, 27, 28];
+    const nq_list = [2, 4, 6, 8];
+    const level_list = [4.00, 6.40, 9.60, 16.00];
+    const results = [];
+
+    let loaded = 0;
+
+    indices.forEach(
+        (index,i) => {
+            const metaPathCBR = `results/daps/cbr/${index}/metadata.json`;
+            const metaPathVBR = `results/daps/vbr/${index}/metadata.json`;
+            const sampleNumber = i + 1;
+
+            // Fetch two metadata files
+            Promise.all([
+            fetch(metaPathCBR).then(res => res.json()),
+            fetch(metaPathVBR).then(res => res.json())
+            ]).then(([metaCBR, metaVBR]) => {
+                results[i] = {index, metaCBR, metaVBR};
+                loaded++;
+
+                if (loaded == indices.length) {
+                    results.forEach((result, i) => {
+                        const { index, metaCBR, metaVBR } = result;
+                        const sampleNumber = i + 1;
+
+                        let html = `
+                        <div class="container">
+                            <h1 class="sample-title">Sample ${sampleNumber}</h1>
+                            <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2"></th>
+                                        <th colspan="4">Audio input</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="audio-box">
+                                            <audio oncontextmenu="return false;" controls name="media">
+                                                <source src="results/daps/cbr/${index}/input.wav" controls type="audio/wav">
+                                            </audio>
+                                        </td>
+                                        <td colspan="3" class="spectrogram">
+                                            <img src="results/daps/cbr/${index}/input.png" alt="Spectrogram Image">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">DAC (CBR)</th>
+                                        <th colspan="5">VRVQ ($ \\alpha = 2 $)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>$N_q$</th>
+                                        <th>Recon</th>
+                                        <th>kbps</th>
+                                        <th>SI-SDR</th>
+                                        <th>Level $l$</th>
+                                        <th>Imp. map</th>
+                                        <th>Recon</th>
+                                        <th>kbps</th>
+                                        <th>SI-SDR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+                        // body
+                        for (let j=0; j < nq_list.length; j++) {
+                            const nq = nq_list[j];
+                            const level = level_list[j];
+                            const nqKey = `nq_${nq}`;
+                            const levelKey = `level_${level.toFixed(2)}`;
+
+                            const cbr = metaCBR[nqKey];
+                            const vbr = metaVBR[levelKey];
+
+                            const cbrAudioPath = `results/daps/cbr/${index}/recon_${nqKey}.wav`;
+                            const vbrAudioPath = `results/daps/vbr/${index}/recon_${level.toFixed(2)}.wav`;
+                            const impmapPath = `results/daps/vbr/${index}/imp_map_${level.toFixed(2)}.png`;
+
+                            html += `
+                                <tr>
+                                    <td>$${nq}$</td>
+                                    <td class="audio-box">
+                                        <audio src="${cbrAudioPath}" controls type="audio/wav">
+                                    </td>
+                                    <td>${cbr.kbps.toFixed(2)}</td>
+                                    <td>${cbr.sisdr.toFixed(2)}</td>
+
+                                    <td>$${level.toFixed(2)}$</td>
+                                    <td class="impmap">
+                                        <img src="${impmapPath}" alt="impmap Image">
+                                    </td>
+                                    <td class="audio-box">
+                                        <audio oncontextmenu="return false;" controls name="media">
+                                            <source src="${vbrAudioPath}" type="audio/wav">
+                                        </audio>
+                                    </td>
+                                    <td>${vbr.kbps.toFixed(2)}</td>
+                                    <td>${vbr.sisdr.toFixed(2)}</td>
+                                </tr>
+                            `;
+                        }
+                        
+                        html += `
+                                </table>
+                            </div>
+                            </div>
+                            `
+                        document.getElementById("results-container-speech").insertAdjacentHTML('beforeend', html);
+                    });
+                }
+            });
+        });
+</script>
+
+
+<!-- ###################### Audio and Importance Map Samples ################################-->
+<!-- scripts for musdb -->
+<!-- const indices2 = Array.from({ length: 30 }, (_, i) => i); -->
+<div id="results-container-music"></div>
+<script>
+    const indices2 = [6, 7, 9, 10, 17, 20, 21, 27];
+    const nq_list2 = [2, 4, 6, 8];
+    const level_list2 = [4.00, 6.40, 9.60, 16.00];
+    const results2 = [];
+
+    let loaded2 = 0;
+
+    indices2.forEach(
+        (index,i) => {
+            const metaPathCBR = `results/musdb18/cbr/${index}/metadata.json`;
+            const metaPathVBR = `results/musdb18/vbr/${index}/metadata.json`;
+            const sampleNumber = i + indices.length;
+
+            // Fetch two metadata files
+            Promise.all([
+            fetch(metaPathCBR).then(res => res.json()),
+            fetch(metaPathVBR).then(res => res.json())
+            ]).then(([metaCBR, metaVBR]) => {
+                results2[i] = {index, metaCBR, metaVBR};
+                loaded2++;
+
+                if (loaded2 == indices2.length) {
+                    results2.forEach((result, i) => {
+                        const { index, metaCBR, metaVBR } = result;
+                        const sampleNumber = i + indices.length;
+
+                        let html = `
+                        <div class="container">
+                            <h1 class="sample-title">Sample ${sampleNumber}</h1>
+                            <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2"></th>
+                                        <th colspan="4">Audio input</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="audio-box">
+                                            <audio oncontextmenu="return false;" controls name="media">
+                                                <source src="results/musdb18/cbr/${index}/input.wav" controls type="audio/wav">
+                                            </audio>
+                                        </td>
+                                        <td colspan="3" class="spectrogram">
+                                            <img src="results/musdb18/cbr/${index}/input.png" alt="Spectrogram Image">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4">DAC (CBR)</th>
+                                        <th colspan="5">VRVQ ($ \\alpha = 2 $)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>$N_q$</th>
+                                        <th>Recon</th>
+                                        <th>kbps</th>
+                                        <th>SI-SDR</th>
+                                        <th>Level $l$</th>
+                                        <th>Imp. map</th>
+                                        <th>Recon</th>
+                                        <th>kbps</th>
+                                        <th>SI-SDR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+                        // body
+                        for (let j=0; j < nq_list2.length; j++) {
+                            const nq = nq_list2[j];
+                            const level = level_list2[j];
+                            const nqKey = `nq_${nq}`;
+                            const levelKey = `level_${level.toFixed(2)}`;
+
+                            const cbr = metaCBR[nqKey];
+                            const vbr = metaVBR[levelKey];
+
+                            const cbrAudioPath = `results/musdb18/cbr/${index}/recon_${nqKey}.wav`;
+                            const vbrAudioPath = `results/musdb18/vbr/${index}/recon_${level.toFixed(2)}.wav`;
+                            const impmapPath = `results/musdb18/vbr/${index}/imp_map_${level.toFixed(2)}.png`;
+
+                            html += `
+                                <tr>
+                                    <td>$${nq}$</td>
+                                    <td class="audio-box">
+                                        <audio src="${cbrAudioPath}" controls type="audio/wav">
+                                    </td>
+                                    <td>${cbr.kbps.toFixed(2)}</td>
+                                    <td>${cbr.sisdr.toFixed(2)}</td>
+
+                                    <td>$${level.toFixed(2)}$</td>
+                                    <td class="impmap">
+                                        <img src="${impmapPath}" alt="impmap Image">
+                                    </td>
+                                    <td class="audio-box">
+                                        <audio oncontextmenu="return false;" controls name="media">
+                                            <source src="${vbrAudioPath}" type="audio/wav">
+                                        </audio>
+                                    </td>
+                                    <td>${vbr.kbps.toFixed(2)}</td>
+                                    <td>${vbr.sisdr.toFixed(2)}</td>
+                                </tr>
+                            `;
+                        }
+                        
+                        html += `
+                                </table>
+                            </div>
+                            </div>
+                            `
+                        document.getElementById("results-container-music").insertAdjacentHTML('beforeend', html);
+                    });
+                }
+            });
+        });
+</script>
+
+<!--############## Templatees ###################-->
+<!--############## Templatees ###################-->
+<!--############## Templatees ###################-->
+<!--############## Templatees ###################-->
+
+<!-- Image carousel -->
+<!--<section class="hero is-small">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      <div id="results-carousel" class="carousel results-carousel">-->
+<!--       <div class="item">-->
+<!--        &lt;!&ndash; Your image here &ndash;&gt;-->
+<!--        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>-->
+<!--        <h2 class="subtitle has-text-centered">-->
+<!--          Overall proposed framework of variable bitrate RVQ.-->
+<!--        </h2>-->
+<!--      </div>-->
+<!--      <div class="item">-->
+<!--        &lt;!&ndash; Your image here &ndash;&gt;-->
+<!--        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>-->
+<!--        <h2 class="subtitle has-text-centered">-->
+<!--          Second image description.-->
+<!--        </h2>-->
+<!--      </div>-->
+<!--      <div class="item">-->
+<!--        &lt;!&ndash; Your image here &ndash;&gt;-->
+<!--        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>-->
+<!--        <h2 class="subtitle has-text-centered">-->
+<!--         Third image description.-->
+<!--       </h2>-->
+<!--     </div>-->
+<!--     <div class="item">-->
+<!--      &lt;!&ndash; Your image here &ndash;&gt;-->
+<!--      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>-->
+<!--      <h2 class="subtitle has-text-centered">-->
+<!--        Fourth image description.-->
+<!--      </h2>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!-- End image carousel -->
+
+
+
+
+<!-- Youtube video -->
+<!--<section class="hero is-small is-light">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      &lt;!&ndash; Paper video. &ndash;&gt;-->
+<!--      <h2 class="title is-3">Video Presentation</h2>-->
+<!--      <div class="columns is-centered has-text-centered">-->
+<!--        <div class="column is-four-fifths">-->
+<!--          -->
+<!--          <div class="publication-video">-->
+<!--            &lt;!&ndash; Youtube embed code here &ndash;&gt;-->
+<!--            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!-- End youtube video -->
+
+
+<!-- Video carousel -->
+<!--<section class="hero is-small">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      <h2 class="title is-3">Another Carousel</h2>-->
+<!--      <div id="results-carousel" class="carousel results-carousel">-->
+<!--        <div class="item item-video1">-->
+<!--          <video poster="" id="video1" autoplay controls muted loop height="100%">-->
+<!--            &lt;!&ndash; Your video file here &ndash;&gt;-->
+<!--            <source src="static/videos/carousel1.mp4"-->
+<!--            type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-video2">-->
+<!--          <video poster="" id="video2" autoplay controls muted loop height="100%">-->
+<!--            &lt;!&ndash; Your video file here &ndash;&gt;-->
+<!--            <source src="static/videos/carousel2.mp4"-->
+<!--            type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--        <div class="item item-video3">-->
+<!--          <video poster="" id="video3" autoplay controls muted loop height="100%">\-->
+<!--            &lt;!&ndash; Your video file here &ndash;&gt;-->
+<!--            <source src="static/videos/carousel3.mp4"-->
+<!--            type="video/mp4">-->
+<!--          </video>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!-- End video carousel -->
+
+
+
+
+
+
+<!-- Paper poster -->
+<!--<section class="hero is-small is-light">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container">-->
+<!--      <h2 class="title">Poster</h2>-->
+
+<!--      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">-->
+<!--          </iframe>-->
+<!--        -->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--End paper poster -->
+
+
+<!--BibTex citation -->
+<!--  <section class="section" id="BibTeX">-->
+<!--    <div class="container is-max-desktop content">-->
+<!--      <h2 class="title">BibTeX</h2>-->
+<!--      <pre><code>BibTex Code Here</code></pre>-->
+<!--    </div>-->
+<!--</section>-->
+<!--End BibTex citation -->
+<!-- Citation Section -->
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
